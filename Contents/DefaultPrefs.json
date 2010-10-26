@@ -9,6 +9,6 @@
 			"Medium (1200 kbit/s)",
 			"High (1500 kbit/s)"
 		],
-		"default": "High (1500 kbit/s)",
-	},
+		"default": "High (1500 kbit/s)"
+	}
 ]
