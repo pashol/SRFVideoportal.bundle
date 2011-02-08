@@ -105,21 +105,23 @@ def GetPreviousEpisodes(sender, url, showTitle, previousEpisode=False):
         #no additional pages
         pass
 
-    if base_url.find("&period=") != -1:
-        (url, a, date) = base_url.rpartition("&period=")
-        (year, a, month) = date.partition("-")
-        year = int(year)
-        month = int(month)
-    else:
-        year = datetime.date.today().year
-        month = datetime.date.today().month
+    try:
+        prevURL = xml.xpath("//div[@class='grey_box sendung_nav']/a")[0].get('href')
+        Log(prevURL)
+        if prevURL.find("&period=") != -1:
+            (url, a, date) = prevURL.rpartition("&period=")
+            (year, a, month) = date.partition("-")
+            year = int(year)
+            month = int(month)
     
-    prev_month = datetime.date(year=year if month != 1 else (year - 1), month=(month - 1) if month > 1 else 12, day=1)
-    url = url + "&period=" + str(prev_month.year) + "-" + "%02d" % prev_month.month
+        prev_month = datetime.date(year=year, month=month, day=1)
+        url = SF_ROOT + prevURL
     
-    if previousEpisode or len(dir) > 0 or prev_month.year < 2000:
-        dir.Append(Function(DirectoryItem(GetPreviousEpisodes, title=L("Episodes from ") + L(prev_month.strftime('%B')) + " " + str(prev_month.year), url=url), url=url, showTitle=showTitle))
-    else:
-        dir.Extend(GetPreviousEpisodes(sender, url, showTitle))
+        if previousEpisode or len(dir) > 0 or prev_month.year < 2000:
+            dir.Append(Function(DirectoryItem(GetPreviousEpisodes, title=L("Episodes from ") + L(prev_month.strftime('%B')) + " " + str(prev_month.year), url=url), url=url, showTitle=showTitle))
+        else:
+            dir.Extend(GetPreviousEpisodes(sender, url, showTitle))
+    except:
+        pass
 
     return dir
