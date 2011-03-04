@@ -99,7 +99,7 @@ def GetPreviousEpisodes(sender, url, showTitle, previousEpisode=False):
 
         if (current_page < max_page):
             next_url = base_url + "&page=" + str(current_page + 1)
-            dir.Append(Function(DirectoryItem(GetPreviousEpisodes, title=L("Previous Episodes"), url=next_url), url=next_url, showTitle=showTitle))
+            dir.Append(Function(DirectoryItem(GetPreviousEpisodes, title=L("Previous Episodes"), url=next_url, thumb=R('icon-previous.png')), url=next_url, showTitle=showTitle))
             return dir
     except:
         #no additional pages
@@ -118,7 +118,7 @@ def GetPreviousEpisodes(sender, url, showTitle, previousEpisode=False):
         url = SF_ROOT + prevURL
     
         if previousEpisode or len(dir) > 0 or prev_month.year < 2000:
-            dir.Append(Function(DirectoryItem(GetPreviousEpisodes, title=L("Episodes from ") + L(prev_month.strftime('%B')) + " " + str(prev_month.year), url=url), url=url, showTitle=showTitle))
+            dir.Append(Function(DirectoryItem(GetPreviousEpisodes, title=L("Episodes from ") + L(prev_month.strftime('%B')) + " " + str(prev_month.year), url=url, thumb=R('icon-previous.png')), url=url, showTitle=showTitle))
         else:
             dir.Extend(GetPreviousEpisodes(sender, url, showTitle))
     except:
