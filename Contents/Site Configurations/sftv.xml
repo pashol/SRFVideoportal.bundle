@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <site site="http://www\.videoportal\.sf\.tv.*"
-      plugin="http://www.videoportal.sf.tv/flash/videoplayer.swf"
+      plugin="http://www\.videoportal\.sf\.tv/flash/videoplayer\.swf"
       initialState="playing"
       version="1.0">
   <crop x="0" y="0" width="640" height="360" />
