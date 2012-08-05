@@ -121,4 +121,9 @@ def EpisodeMenu(title, url):
 
     except: pass
 
+    if len(oc) == 0:
+        return ObjectContainer(
+            header = "Keine Folgen verfügbar", 
+            message = "Für diese Sendung sind im Moment keine Sendungen verfügbar.")
+
     return oc
