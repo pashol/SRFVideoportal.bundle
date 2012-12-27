@@ -1,18 +1,5 @@
 {
-    "Shows": "Sendungen",
-    "Channels": "Channels",
-    "Search": "Suche...",
-    "Search for Episodes": "Suche nach Sendungen",
-    "Previous Episodes": "Ältere Sendungen",
+    "Previous Month": "Voriger Monat",
     "No Episodes": "Keine Sendungen vorhanden",
-    "Episodes from ": "Sendungen vom ",
-    "More Results": "Mehr Resultate",
-    "January": "Januar",
-    "February": "Februar",
-    "March": "März",
-    "May": "Mai",
-    "June": "Juni",
-    "July": "Juli",
-    "October": "Oktober",
-    "December": "Dezember"
+    "This show has no episodes available.": "Für diese Sendung sind im Moment keine Videos verfügbar."
 }
