@@ -35,12 +35,12 @@ def MainMenu():
 
     page = HTML.ElementFromURL(SF_SHOWS)
 
-    for show in page.xpath('//div[contains(@class, "az_item")]'):
+    for show in page.xpath('//li[contains(@class, "az_item")]'):
         url = show.xpath('./a')[0].get('href')
         if url.startswith('http://') == False:
             url = SF_ROOT + url
 
-        title = show.xpath('./a[@class="sendung_name"]/text()')[0]
+        title = show.xpath('.//a[@class="sendung_name"]/text()')[0]
         thumb = show.xpath('.//img')[0].get('src')
         thumbs = [ REGEX_IMAGE_SUB.sub(thumb, 'width=500'), thumb ]
 
@@ -106,15 +106,15 @@ def EpisodeMenu(title, url):
 def readEpisodes(url):
     episodes = []
     page = HTML.ElementFromURL(url)
-    show = page.xpath('//div[@id = "sendung_info"]/div[@id = "title"]/text()')[0]
+    show = page.xpath('//div[@id = "sendung_info"]/h1[@id = "title"]/text()')[0]
 
     # The most recent episode (likely to just be one)
-    for episode in page.xpath('//div[@class = "sendung_item"]'):
+    for episode in page.xpath('//li[@class = "sendung_item"]'):
         episode_url = episode.xpath('.//a')[0].get('href')
         if episode_url.startswith('http://') == False:
             episode_url = SF_ROOT + episode_url
 
-        title = ''.join(episode.xpath('.//div[@class="title"]/a/text()'))
+        title = ''.join(episode.xpath('.//h2[@class="title"]/a/text()'))
         try:
             title += ' ' + ''.join(episode.xpath('.//div[@class="title_date"]/text()'))
         except:
