@@ -6,8 +6,6 @@ SF_CHANNELS = SF_ROOT + '/player/tv/channels'
 SF_SEARCH   = SF_ROOT + '/player/tv/suche'
 
 TITLE       = 'Schweizer Fernsehen'
-ICON        = 'icon-default.png'
-ART         = 'art-default.jpg'
 
 REGEX_IMAGE_SUB = Regex('width=\d+')
 MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
@@ -15,17 +13,11 @@ MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
 
 ####################################################################################################
 def Start():
-    Plugin.AddPrefixHandler('/video/schweizerfernsehen', MainMenu, TITLE, ICON, ART)
+    Plugin.AddPrefixHandler('/video/schweizerfernsehen', MainMenu, TITLE)
     Plugin.AddViewGroup('InfoList', viewMode = 'InfoList', mediaType = 'items')
 
     ObjectContainer.title1 = TITLE
-    ObjectContainer.art = R(ART)
     ObjectContainer.view_group = 'InfoList'
-
-    DirectoryObject.art = R(ART)
-    DirectoryObject.thumb = R(ICON)
-    EpisodeObject.art = R(ART)
-    EpisodeObject.thumb = R(ICON)
 
     HTTP.CacheTime = CACHE_1HOUR
 
@@ -52,7 +44,7 @@ def MainMenu():
             key = Callback(EpisodeMenu, title = title, url = url),
             title = title,
             summary = description,
-            thumb = Resource.ContentsOfURLWithFallback(thumbs, fallback = ICON)))
+            thumb = Resource.ContentsOfURLWithFallback(thumbs)))
 
     return oc
 
@@ -129,7 +121,7 @@ def readEpisodes(url):
             show = show,
             title = title,
             summary = description,
-            thumb = Resource.ContentsOfURLWithFallback(thumbs, fallback = ICON)))
+            thumb = Resource.ContentsOfURLWithFallback(thumbs)))
 
     # get paged content for current month
     try:
