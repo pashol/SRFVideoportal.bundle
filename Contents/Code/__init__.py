@@ -98,20 +98,20 @@ def EpisodeMenu(title, url):
 def readEpisodes(url):
     episodes = []
     page = HTML.ElementFromURL(url)
-    show = page.xpath('//div[@id = "sendung_info"]/h1[@id = "title"]/text()')[0]
+    show = page.xpath('//div[@class = "sendung_info_right"]/h1[@class = "title"]/text()')[0]
 
     # The most recent episode (likely to just be one)
     for episode in page.xpath('//li[@class = "sendung_item"]'):
-        episode_url = episode.xpath('.//a')[0].get('href')
+        episode_url = episode.xpath('.//a')[1].get('href')
         if episode_url.startswith('http://') == False:
             episode_url = SF_ROOT + episode_url
 
-        title = ''.join(episode.xpath('.//h2[@class="title"]/a/text()'))
+        title = ''.join(episode.xpath('.//h3[@class="title"]/text()'))
         try:
             title += ' ' + ''.join(episode.xpath('.//div[@class="title_date"]/text()'))
         except:
             pass
-        thumb = episode.xpath('.//img')[0].get('src')
+        thumb = episode.xpath('.//img')[0].get('data-src2x')
         thumbs = [ REGEX_IMAGE_SUB.sub('width=500', thumb), thumb ]
 
         description = ''.join(episode.xpath('.//div[@class="description"]/text()'))
