@@ -217,11 +217,13 @@ def createEpisodeObject(url, title, summary, thumb, rating_key, show_name=None, 
         producers = [],
         rating_key=rating_key,
         show = show_name,
+#         optimized_for_streaming = True,
         items = [
             MediaObject(
                 parts = [
-                    PartObject(key=HTTPLiveStreamURL(url=url))
-                ]
+                    PartObject(key=HTTPLiveStreamURL(Callback(PlayVideo, url=url)))
+                ],
+        optimized_for_streaming = True
             )
         ]
     )
