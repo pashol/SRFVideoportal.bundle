@@ -9,14 +9,9 @@ SF_SHOWS    = SF_ROOT + '/player/tv/sendungen'
 SF_CHANNELS = SF_ROOT + '/player/tv/channels'
 SF_SEARCH   = SF_ROOT + '/player/tv/suche'
 
-
 TITLE       = 'Schweizer Fernsehen'
 
-
-
 REGEX_IMAGE_SUB = Regex('width=\d+')
-MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
-          "August", "September", "Oktober", "November", "Dezember"]
 
 ####################################################################################################
 def Start():
