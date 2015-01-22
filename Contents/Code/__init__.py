@@ -106,39 +106,20 @@ def EpisodeMenu(title, url):
     except IndexError:
         pass
 
-    if len(oc) == 0 and 'period=' not in url:
-        return ObjectContainer(
-            header = unicode(Locale.LocalString("No Episodes")),
-            message =  unicode(Locale.LocalString("This show has no episodes available.")))
-
     # Add a link to the previous months content...
-    try:
-        if 'period=' in url:
-            year_month = url.split('period=')[1]
-            (year, month) = map(lambda x: int(x), year_month.split('-'))
-        else:
-            month_year = ''.join(page.xpath('//div[@id = "act_month_year"]/text()'))
-            (month, year) = month_year.split(' ')
-            now = Datetime.Now()
-            year = int(year)
-            month = MONTHS.index(month) + 1
+    if 'period=' in url:
+        period = url.split('period=')[1]
+    else:
+        period = datetime.datetime.today()
+        period = period.strftime('%Y-%m')
 
-        if month == 1:
-            month = 12
-            year = year - 1
-        else:
-            month = month - 1
+    previous_url = getUrlWithoutParams(url) + '?id=' + getIdFromUrl(url) + '&period=' + getLastMonth(period)
+    Log.Debug('Previous URL: %s' %previous_url)
 
-        if 'period=' in url:
-            previous_url = Regex('period=\d+-\d+').sub('period=%d-%d' % (year, month), url)
-        else:
-            previous_url = url + "&period=%d-%d" % (year, month)
-
-        oc.add(DirectoryObject(
-            key = Callback(EpisodeMenu, title = title, url = previous_url),
-            title =  Locale.LocalString("Previous Month")))
-
-    except: pass
+    oc.add(DirectoryObject(
+        key = Callback(EpisodeMenu, title = title, url = previous_url),
+        title =  Locale.LocalString("Previous Month"))
+    )
 
     return oc
 
@@ -192,6 +173,13 @@ def getVideoFromJSON( json):
         index = len(sortedstreams)-2
     
     return sortedstreams[index]["url"]
+    
+def getLastMonth(period):
+    current = datetime.datetime(*(time.strptime(period, "%Y-%m")[:6]))
+    first = datetime.datetime(day=1, month=current.month, year=current.year)
+    lastMonth = first - datetime.timedelta(days=1)
+    lastMonth = lastMonth.strftime('%Y-%m')
+    return lastMonth
 
 def createEpisodeObject(url, title, summary, thumb, rating_key, show_name=None, include_container=False):
     container = Container.MP4
