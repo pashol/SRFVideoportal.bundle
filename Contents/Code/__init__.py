@@ -98,7 +98,9 @@ def EpisodeMenu(title, url):
                 url=episode_url,
                 title=title,
                 summary=description,
-                thumb=Resource.ContentsOfURLWithFallback(thumbs),
+                thumb=thumb,
+                rating_key=id,
+                #thumb=Resource.ContentsOfURLWithFallback(thumbs),
                 show_name=show_name))
             
     except IndexError:
@@ -191,11 +193,12 @@ def getVideoFromJSON( json):
     
     return sortedstreams[index]["url"]
 
-def createEpisodeObject(url, title, summary, thumb, show_name=None, include_container=False):
+def createEpisodeObject(url, title, summary, thumb, rating_key, show_name=None, include_container=False):
     container = Container.MP4
     video_codec = VideoCodec.H264
     audio_codec = AudioCodec.AAC
     audio_channels = 2
+#     protocols = Protocol.RTMP
 
     track_object = EpisodeObject(
         key = Callback(
@@ -204,6 +207,7 @@ def createEpisodeObject(url, title, summary, thumb, show_name=None, include_cont
             title=title,
             summary=summary,
             thumb=thumb,
+            rating_key=rating_key,
             show_name=show_name,
             include_container=True
         ),
@@ -211,6 +215,7 @@ def createEpisodeObject(url, title, summary, thumb, show_name=None, include_cont
         summary = summary,
         thumb=thumb,
         producers = [],
+        rating_key=rating_key,
         show = show_name,
         items = [
             MediaObject(
@@ -221,6 +226,7 @@ def createEpisodeObject(url, title, summary, thumb, show_name=None, include_cont
                 video_codec = video_codec,
                 audio_codec = audio_codec,
                 audio_channels = audio_channels,
+#                 protocols = protocols,
                 optimized_for_streaming = True
             )
         ]
