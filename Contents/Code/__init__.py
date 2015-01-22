@@ -66,7 +66,8 @@ def EpisodeMenu(title, url):
             episode_url = episode.xpath('.//a')[1].get('href')
             Log.Debug('Episode URL: %s' %episode_url) 
             
-            #Get ID for JSON   
+            #Get ID for JSON 
+            #Move to PlayVideo for further development. Speed-up parsing  
             id = getIdFromUrl(episode_url)
             Log.Debug('ID from URL: %s' %id)
             json = getJSONForId(id)
@@ -74,10 +75,10 @@ def EpisodeMenu(title, url):
             episode_url = getVideoFromJSON(json)
             Log.Debug('Streaming URL: %s' %episode_url)         
     
-            title = ''.join(episode.xpath('.//h3[@class="title"]/text()'))
+            title_show = ''.join(episode.xpath('.//h3[@class="title"]/text()'))
 
             try:
-                title += ' ' + ''.join(episode.xpath('.//div[@class="title_date"]/text()'))
+                title_show += ' ' + ''.join(episode.xpath('.//div[@class="title_date"]/text()'))
             except:
                 pass
             
@@ -91,7 +92,7 @@ def EpisodeMenu(title, url):
 
             oc.add(createEpisodeObject(
                 url=episode_url,
-                title=title,
+                title=title_show,
                 summary=description,
                 thumb=thumb,
                 rating_key=id,
